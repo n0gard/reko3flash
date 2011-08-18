@@ -1,4 +1,4 @@
-package com.dragon.img;
+package com.dragontiger.reko3.tools;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -20,7 +20,7 @@ public class CuttingPic {
      */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        String dirPath = "D:/Áú»¢¹¤×÷ÊÒ/reko3flash/ËØ²Ä/ËùÓÐ";
+        String dirPath = "E:/FLASH/workspace/reko3flash/ç´ æ/æ‰€æœ‰";
         if (args.length > 0) {
             dirPath = args[0];
         }
@@ -42,9 +42,12 @@ public class CuttingPic {
         });
         for (File file : allFiles) {
             System.out.println(file.getName());
+            cut(file);
         }
 
-        File testImage = allFiles[0];
+    }
+
+    private static void cut(File testImage) {
         BufferedImage srcImageBuf = null;
         try {
             srcImageBuf = ImageIO.read(testImage);
@@ -52,90 +55,103 @@ public class CuttingPic {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        BufferedImage dstImageBuf = new BufferedImage(32, 32,
-                BufferedImage.TYPE_INT_RGB);
+        BufferedImage dstImageBuf = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+        BufferedImage dstImageBufTemp = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
 
         Graphics2D g2d = dstImageBuf.createGraphics();
-        dstImageBuf = g2d.getDeviceConfiguration().createCompatibleImage(32,
-                32, Transparency.TRANSLUCENT);
+        Graphics2D g2dTemp = dstImageBufTemp.createGraphics();
+        dstImageBuf = g2d.getDeviceConfiguration().createCompatibleImage(32, 32,
+                Transparency.TRANSLUCENT);
+        dstImageBufTemp = g2dTemp.getDeviceConfiguration().createCompatibleImage(32, 32,
+                Transparency.TRANSLUCENT);
         g2d.dispose();
+        g2dTemp.dispose();
         g2d = dstImageBuf.createGraphics();
+        g2dTemp = dstImageBufTemp.createGraphics();
 
-        Image srcImage = srcImageBuf.getScaledInstance(32, 64,
+        Image srcImage = srcImageBuf.getSubimage(0, 32, 32, 32).getScaledInstance(32, 32,
                 BufferedImage.SCALE_DEFAULT);
 
         g2d.drawImage(srcImage, 0, 0, null);
-        // Ñ­»·Ã¿Ò»¸öÏñËØµã£¬¸Ä±äÏñËØµãµÄAlphaÖµ
-        int alpha = 100;
+        g2dTemp.drawImage(srcImage, 0, 0, null);
+        // 
         for (int j1 = dstImageBuf.getMinY(); j1 < dstImageBuf.getHeight(); j1++) {
             for (int j2 = dstImageBuf.getMinX(); j2 < dstImageBuf.getWidth(); j2++) {
-                int rgb = dstImageBuf.getRGB(j2, j1);
-                System.out.print(" " + rgb);
+                int rgb = dstImageBufTemp.getRGB(j2, j1);
+                //                System.out.print(" " + rgb);
                 // rgb = ((alpha + 1) << 24) | (rgb & 0x00ffffff);
                 if (rgb == Color.BLACK.getRGB()) {
                     int otherRgb = 0;
-                    // ÖÜÎ§°Ë¸öÏñËØÈç¹ûÓÐ²»ÊÇºÚÉ«µÄ»° ¾Í²»¸Ä±ä
+                    //  11 0 2  
+                    //   9 X 3  
+                    //   8 6 4  
                     List<Integer> xs = new ArrayList<Integer>(8);
                     List<Integer> ys = new ArrayList<Integer>(8);
-                    // 12
-                    int x12 = j2;
-                    int y12 = j1 - 1;
-                    xs.add(x12);
-                    ys.add(y12);
-                    // 11µã·½ÏòµÄÏñËØ×ø±ê
-                    int x10 = j2 - 1;
-                    int y10 = j1 - 1;
-                    xs.add(x10);
-                    ys.add(y10);
+                    // 0
+                    int x0 = j2;
+                    int y0 = j1 - 1;
+                    xs.add(x0);
+                    ys.add(y0);
+                    // 11ï¿½ã·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                    //                    int x10 = j2 - 1;
+                    //                    int y10 = j1 - 1;
+                    //                    xs.add(x10);
+                    //                    ys.add(y10);
                     // 9
                     int x9 = j2 - 1;
                     int y9 = j1;
                     xs.add(x9);
                     ys.add(y9);
                     // 8
-                    int x8 = j2 - 1;
-                    int y8 = j1 + 1;
-                    xs.add(x8);
-                    ys.add(y8);
+                    //                    int x8 = j2 - 1;
+                    //                    int y8 = j1 + 1;
+                    //                    xs.add(x8);
+                    //                    ys.add(y8);
                     // 6
                     int x6 = j2;
                     int y6 = j1 + 1;
                     xs.add(x6);
                     ys.add(y6);
                     // 4
-                    int x4 = j2 + 1;
-                    int y4 = j1 + 1;
-                    xs.add(x4);
-                    ys.add(y4);
+                    //                    int x4 = j2 + 1;
+                    //                    int y4 = j1 + 1;
+                    //                    xs.add(x4);
+                    //                    ys.add(y4);
                     // 3
                     int x3 = j2 + 1;
                     int y3 = j1;
                     xs.add(x3);
                     ys.add(y3);
                     // 2
-                    int x2 = j2 + 1;
-                    int y2 = j1 - 1;
-                    xs.add(x2);
-                    ys.add(y2);
+                    //                    int x2 = j2 + 1;
+                    //                    int y2 = j1 - 1;
+                    //                    xs.add(x2);
+                    //                    ys.add(y2);
 
+                    boolean isNeed = false;
                     for (int i = 0; i < xs.size(); i++) {
                         int x = xs.get(i);
                         int y = ys.get(i);
-                        if (x < dstImageBuf.getMinX()
-                                || x > dstImageBuf.getWidth()
-                                || y < dstImageBuf.getMinY()
-                                || y > dstImageBuf.getHeight()) {
+                        if (x < dstImageBuf.getMinX() || x >= dstImageBuf.getWidth()
+                                || y < dstImageBuf.getMinY() || y >= dstImageBuf.getHeight()) {
                             continue;
                         }
-                        otherRgb = dstImageBuf.getRGB(x, y);
+                        System.out.println("X " + x + " Y " + y);
+                        otherRgb = dstImageBufTemp.getRGB(x, y);
                         if (otherRgb != Color.BLACK.getRGB()) {
+                            isNeed = true;
                             break;
                         }
                     }
 
                     xs = new ArrayList<Integer>();
                     ys = new ArrayList<Integer>();
-                    System.out.println(" B ");
+
+                    if (isNeed) {
+                        continue;
+                    }
+
+                    System.out.println(" Black  ");
                     dstImageBuf.setRGB(j2, j1, new Color(0, 0, 0, 1).getRGB());
                 }
             }
@@ -143,25 +159,12 @@ public class CuttingPic {
         System.out.println();
         g2d.drawImage(dstImageBuf, 0, 0, null);
         try {
-            ImageIO.write(dstImageBuf, "png", new File(dirPath + "/test.png"));
+            ImageIO.write(dstImageBuf, "png", new File("D:/test_"
+                    + testImage.getName().split("_")[1].split("\\.")[0] + "b.png"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        // for (int i = 0; i < srcImageBuf.getHeight(); i++) {
-        // for (int j = 0; j < srcImageBuf.getWidth(); j++) {
-        // g2d.drawImage(srcImage, j, i, j, i, j, i, j, i, null);
-        // }
-        // if (i == 31) {
-        // try {
-        // ImageIO.write(dstImageBuf, "png", new File(dirPath
-        // + "/test" + i + ".png"));
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        // }
-        // }
 
     }
 }
