@@ -1,5 +1,4 @@
 ﻿<flash_project name="无标题 Flash 项目" version="1">
     <project_file path="./未命名-1.fla" filetype="fla" profile="" def_file="true" />
-    <project_file path="./未命名-1.swf" filetype="swf" />
-    <project_file path="./fangkuai.as" filetype="as" />
+    <project_file path="./Fang.as" filetype="as" />
 </flash_project>
