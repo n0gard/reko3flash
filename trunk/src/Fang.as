@@ -36,34 +36,45 @@
 			picUrlA.url=arrayA[i];
 			picUrlB.url=arrayB[i];
 		}
-		private function loadpic():void {
+		private function loadpic(ti:int):void {
 			loadPicA=new Loader();
 			loadPicB=new Loader();
 			loadPicA.load(picUrlA);
 			loadPicB.load(picUrlB);
-			loadPicB.visible=true;
+
+			//var tweenA:Tween=new Tween(loadPicA,"x",Elastic.easeInOut,50,100,2,true);
+			addChild(loadPicA);
+			addChild(loadPicB);
 
 			fangM=new Sprite;
 			fangM.addChild(loadPicA);
 			fangM.addChild(loadPicB);
-			myTime=new Timer(500);
-			myTimeB=new Timer(1000);
+			myTime=new Timer(ti);
+			myTimeB=new Timer(ti);
 			myTime.addEventListener(TimerEvent.TIMER,timefuc);
 			myTimeB.addEventListener(TimerEvent.TIMER,timefucB);
+			loadPicB.visible=false;
 			myTime.start();
-			myTimeB.start();
+			
 			function timefuc(e:TimerEvent) {
-				loadPicA.visible=true;
-				loadPicB.visible=false;
+				loadPicA.visible=false;
+				loadPicB.visible=true;
+				myTime.stop();
+				myTimeB.start();
 			}
 			function timefucB(e:TimerEvent) {
-				loadPicB.visible=true;
-				loadPicA.visible=false;
+				loadPicB.visible=false;
+				loadPicA.visible=true;
+				myTime.start();
+				myTimeB.stop();
 			}
+
+			//loadPicA.x=100;
+			//loadPicB.x=200;
 		}
 		public function Fang(zx:int) {
 			pushArray(zx);
-			loadpic();
+			loadpic(500);
 			addChild(fangM);
 		}
 	}
