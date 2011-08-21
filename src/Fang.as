@@ -19,18 +19,19 @@
 		private var fangM:Sprite;
 		private var myTime:Timer;
 		private var myTimeB:Timer;
-		private var speed:int = 500;
-
+		private var speed:int=500;
+		// 方向默认朝右
+		private var fangxiang:String="right";
 
 		private function pushArray(i:int):void {
-			picUrlA=new URLRequest();
-			picUrlB=new URLRequest();
-			picUrlA.url="../素材/战场可移动单位已拆分/test_"+String(i)+"-1a.png";
-			picUrlB.url="../素材/战场可移动单位已拆分/test_"+String(i)+"-1b.png";
+			picUrlA=new URLRequest  ;
+			picUrlB=new URLRequest  ;
+			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
-			loadPicA=new Loader();
-			loadPicB=new Loader();
+			loadPicA=new Loader  ;
+			loadPicB=new Loader  ;
 			loadPicA.load(picUrlA);
 			loadPicB.load(picUrlB);
 
@@ -38,7 +39,7 @@
 			addChild(loadPicA);
 			addChild(loadPicB);
 
-			fangM=new Sprite;
+			fangM=new Sprite  ;
 			fangM.addChild(loadPicA);
 			fangM.addChild(loadPicB);
 			myTime=new Timer(ti);
@@ -52,6 +53,8 @@
 				loadPicA.visible=false;
 				loadPicB.visible=true;
 				myTime.stop();
+				changeDirection();
+				//flipHorizontal(this);
 				myTimeB.start();
 			}
 			function timefucB(e:TimerEvent) {
@@ -64,6 +67,23 @@
 			//loadPicA.x=100;
 			//loadPicB.x=200;
 		}
+		// 改变方向
+		public function changeDirection() {
+			this.scaleX=-this.scaleX;
+			if (this.scaleX < 0) {
+				this.x = this.x + 32;
+			} else {
+				this.x = this.x - 32;
+			}
+		}
+		// 这个貌似没法用...
+		//public function flipHorizontal(dsp:DisplayObject):void {
+		//var matrix:Matrix = dsp.transform.matrix;
+		//matrix.a=-1;
+		////matrix.tx=dsp.width+dsp.x;
+		//dsp.transform.matrix=matrix;
+		//}
+		// 构造
 		public function Fang(zx:int) {
 			pushArray(zx);
 			loadpic(speed);
