@@ -12,8 +12,6 @@
 
 
 	public class Fang extends Sprite {
-		private var arrayA:Array;
-		private var arrayB:Array;
 		private var picUrlA:URLRequest;
 		private var picUrlB:URLRequest;
 		private var loadPicA:Loader;
@@ -21,20 +19,14 @@
 		private var fangM:Sprite;
 		private var myTime:Timer;
 		private var myTimeB:Timer;
-
+		private var speed:int = 500;
 
 
 		private function pushArray(i:int):void {
-			arrayA=new Array();
-			arrayB=new Array();
-			for (var j:int=0; j<=46; j++) {
-				arrayA[j]="战场可移动单位已拆分/test_"+String(j+1)+"-1a.png";
-				arrayB[j]="战场可移动单位已拆分/test_"+String(j+1)+"-1b.png";
-			}
 			picUrlA=new URLRequest();
 			picUrlB=new URLRequest();
-			picUrlA.url=arrayA[i];
-			picUrlB.url=arrayB[i];
+			picUrlA.url="../素材/战场可移动单位已拆分/test_"+String(i)+"-1a.png";
+			picUrlB.url="../素材/战场可移动单位已拆分/test_"+String(i)+"-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader();
@@ -55,7 +47,7 @@
 			myTimeB.addEventListener(TimerEvent.TIMER,timefucB);
 			loadPicB.visible=false;
 			myTime.start();
-			
+
 			function timefuc(e:TimerEvent) {
 				loadPicA.visible=false;
 				loadPicB.visible=true;
@@ -74,7 +66,7 @@
 		}
 		public function Fang(zx:int) {
 			pushArray(zx);
-			loadpic(500);
+			loadpic(speed);
 			addChild(fangM);
 		}
 	}
