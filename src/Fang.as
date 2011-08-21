@@ -9,6 +9,8 @@
 	import flash.display.BitmapData;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.events.MouseEvent;
+	import fl.motion.Color;
 
 
 	public class Fang extends Sprite {
@@ -20,8 +22,7 @@
 		private var myTime:Timer;
 		private var myTimeB:Timer;
 		private var speed:int=500;
-		// 方向默认朝右
-		private var fangxiang:String="right";
+		private var active:int=1;
 
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
@@ -36,12 +37,16 @@
 			loadPicB.load(picUrlB);
 
 			//var tweenA:Tween=new Tween(loadPicA,"x",Elastic.easeInOut,50,100,2,true);
+			// 请问kinghoo 这里直接fangM.addChild可否？
 			addChild(loadPicA);
 			addChild(loadPicB);
 
 			fangM=new Sprite  ;
 			fangM.addChild(loadPicA);
 			fangM.addChild(loadPicB);
+
+			this.addEventListener(MouseEvent.CLICK,changeStatus);
+
 			myTime=new Timer(ti);
 			myTimeB=new Timer(ti);
 			myTime.addEventListener(TimerEvent.TIMER,timefuc);
@@ -50,18 +55,22 @@
 			myTime.start();
 
 			function timefuc(e:TimerEvent) {
-				loadPicA.visible=false;
-				loadPicB.visible=true;
-				myTime.stop();
-				changeDirection();
-				//flipHorizontal(this);
-				myTimeB.start();
+				if (active==1) {
+					loadPicA.visible=false;
+					loadPicB.visible=true;
+					myTime.stop();
+					changeDirection();
+					//flipHorizontal(this);
+					myTimeB.start();
+				}
 			}
 			function timefucB(e:TimerEvent) {
-				loadPicB.visible=false;
-				loadPicA.visible=true;
-				myTime.start();
-				myTimeB.stop();
+				if (active == 1) {
+					loadPicB.visible=false;
+					loadPicA.visible=true;
+					myTime.start();
+					myTimeB.stop();
+				}
 			}
 
 			//loadPicA.x=100;
@@ -76,13 +85,18 @@
 				this.x = this.x - 32;
 			}
 		}
-		// 这个貌似没法用...
-		//public function flipHorizontal(dsp:DisplayObject):void {
-		//var matrix:Matrix = dsp.transform.matrix;
-		//matrix.a=-1;
-		////matrix.tx=dsp.width+dsp.x;
-		//dsp.transform.matrix=matrix;
-		//}
+		// 改变状态
+		public function changeStatus(e:MouseEvent) {
+			var color:Color=new Color();
+			if (active == 1) {
+				color.brightness = -0.5;
+				active = 0;
+			} else {
+				color.brightness = 0;
+				active = 1;
+			}
+			this.transform.colorTransform = color;
+		}
 		// 构造
 		public function Fang(zx:int) {
 			pushArray(zx);
