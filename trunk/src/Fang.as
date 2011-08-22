@@ -27,8 +27,8 @@
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
 			picUrlB=new URLRequest  ;
-			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
-			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
+			picUrlA.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader  ;
@@ -89,7 +89,7 @@
 		public function changeStatus(e:MouseEvent) {
 			var color:Color=new Color();
 			if (active == 1) {
-				color.brightness = -0.5;
+				color.brightness = -0.3;
 				active = 0;
 			} else {
 				color.brightness = 0;
