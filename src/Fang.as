@@ -18,7 +18,7 @@
 		private var picUrlB:URLRequest;
 		private var loadPicA:Loader;
 		private var loadPicB:Loader;
-		private var fangM:Sprite;
+		//private var fangM:Sprite;
 		private var myTime:Timer;
 		private var myTimeB:Timer;
 		private var speed:int=500;
@@ -41,9 +41,9 @@
 			addChild(loadPicA);
 			addChild(loadPicB);
 
-			fangM=new Sprite  ;
-			fangM.addChild(loadPicA);
-			fangM.addChild(loadPicB);
+			//fangM=new Sprite  ;
+			//fangM.addChild(loadPicA);
+			//fangM.addChild(loadPicB);
 
 			this.addEventListener(MouseEvent.CLICK,changeStatus);
 
@@ -101,7 +101,7 @@
 		public function Fang(zx:int) {
 			pushArray(zx);
 			loadpic(speed);
-			addChild(fangM);
+			//addChild(fangM);
 		}
 	}
 }
