@@ -7,7 +7,8 @@
 		private function DrawRect():void {
 			this.graphics.clear();
 			this.graphics.lineStyle(1,0x000000,100);
-			this.graphics.beginFill(0x6DE779,100);
+			// this.graphics.beginFill(0x6DE779,100);
+			this.graphics.beginFill(0x000000,0);
 			this.graphics.drawRect(-16,-16,32,32);
 			this.graphics.endFill();
 		}
