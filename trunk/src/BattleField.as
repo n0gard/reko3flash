@@ -1,28 +1,24 @@
 ﻿package {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+
 	public class BattleField extends Sprite {
-		private var rect:Sprite;
 
 		private function DrawRect():void {
-			rect=new Sprite();
-			rect.graphics.clear();
-			rect.graphics.lineStyle(1,0x000000,100);
-			rect.graphics.beginFill(0x6DE779,100);
-			rect.graphics.drawRect(-16,-16,32,32);
-			addChild(rect);
+			this.graphics.clear();
+			this.graphics.lineStyle(1,0x000000,100);
+			this.graphics.beginFill(0x6DE779,100);
+			this.graphics.drawRect(-16,-16,32,32);
+			this.graphics.endFill();
 		}
-		
-		private function Move():void{
+		private function Move():void {
 			this.addEventListener(MouseEvent.CLICK,loction);
-			
-			function loction():void{
-			
+
+			function loction():void {
+
+			}
 		}
-		}
-		
-		
-		
-		public function BattleField():void{
+		public function BattleField():void {
 			DrawRect();
 		}
 	}
