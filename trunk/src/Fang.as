@@ -29,8 +29,8 @@
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
 			picUrlB=new URLRequest  ;
-			picUrlA.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
-			picUrlB.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
+			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader  ;
@@ -113,10 +113,12 @@
 			var bfy:int = mousePoint.y-mousePoint.y%32;
 			trace("bfx:"+bfx+"bfy:"+bfy);
 
-			var darkBattleFields:Array=calculateDarkCoordinates(bfx,bfy);
-			for (var i=0; i<this.darkBattleFields.length; i++) {
+			var darkBattleFields:Array =  calculateDarkCoordinates(bfx,bfy);
+			for (var i=0; i< darkBattleFields.length; i++) {
 				var bf:BattleField = darkBattleFields[i];
-				bf.turnToDark();
+				if (bf != null) {
+					bf.turnToDark();
+				}
 			}
 		}
 		private function calculateDarkCoordinates(bfx:int,bfy:int):Array {
@@ -126,10 +128,10 @@
 				var bf2:BattleField = Share.getBF(bfx-i,bfy+i);
 				var bf3:BattleField = Share.getBF(bfx+i,bfy-i);
 				var bf4:BattleField = Share.getBF(bfx+i,bfy+i);
-				bfs.push(bf1);
-				bfs.push(bf2);
-				bfs.push(bf3);
-				bfs.push(bf4);
+				bfs[i] = bf1;
+				bfs[i+1] = bf2;
+				bfs[i+2] = bf3;
+				bfs[i+3] = bf4;
 			}
 			return bfs;
 		}
