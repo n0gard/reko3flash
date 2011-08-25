@@ -24,12 +24,13 @@
 		private var myTimeB:Timer;
 		private var speed:int=500;
 		private var active:int=1;
+		private var moveAbility:int;
 
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
 			picUrlB=new URLRequest  ;
-			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
-			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
+			picUrlA.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader  ;
@@ -111,14 +112,36 @@
 			var bfx:int = mousePoint.x-mousePoint.x%32;
 			var bfy:int = mousePoint.y-mousePoint.y%32;
 			trace("bfx:"+bfx+"bfy:"+bfy);
-			var bf:BattleField = Share.battleObj[ (bfx/32)*24 + bfy/32];
-			bf.turnToDark();
+
+			var darkBattleFields:Array=calculateDarkCoordinates(bfx,bfy);
+			for (var i=0; i<this.darkBattleFields.length; i++) {
+				var bf:BattleField = darkBattleFields[i];
+				bf.turnToDark();
+			}
+		}
+		private function calculateDarkCoordinates(bfx:int,bfy:int):Array {
+			var bfs:Array = new Array();
+			for (var i=0; i<=this.moveAbility; i++) {
+				var bf1:BattleField = Share.getBF(bfx-i,bfy-i);
+				var bf2:BattleField = Share.getBF(bfx-i,bfy+i);
+				var bf3:BattleField = Share.getBF(bfx+i,bfy-i);
+				var bf4:BattleField = Share.getBF(bfx+i,bfy+i);
+				bfs.push(bf1);
+				bfs.push(bf2);
+				bfs.push(bf3);
+				bfs.push(bf4);
+			}
+			return bfs;
 		}
 		// 构造
 		public function Fang(zx:int) {
 			pushArray(zx);
 			loadpic(speed);
 			//addChild(fangM);
+			// 目前默認為5 以後 根據部隊的種類 分配不同的行動能力值
+			if (true) {
+				moveAbility = 5;
+			}
 		}
 	}
 }
