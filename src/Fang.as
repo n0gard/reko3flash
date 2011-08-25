@@ -102,8 +102,11 @@
 		}
 		// 显示高亮
 		public function showAvalibleBattleField(e:MouseEvent) {
+
+			Share.setVisible(true);
 			//battleOBJ[]
 			trace("Fang's   X "+this.x+" Y "+this.y);
+			trace("mouseX"+this.mouseX+"mouseY"+this.mouseY);
 
 			var mousePoint:Point=new Point(this.mouseX, this.mouseY);
 			mousePoint=this.localToGlobal(mousePoint);
@@ -123,15 +126,24 @@
 		}
 		private function calculateDarkCoordinates(bfx:int,bfy:int):Array {
 			var bfs:Array = new Array();
-			for (var i=0; i<=this.moveAbility; i++) {
-				var bf1:BattleField = Share.getBF(bfx-i,bfy-i);
-				var bf2:BattleField = Share.getBF(bfx-i,bfy+i);
-				var bf3:BattleField = Share.getBF(bfx+i,bfy-i);
-				var bf4:BattleField = Share.getBF(bfx+i,bfy+i);
-				bfs[i] = bf1;
-				bfs[i+1] = bf2;
-				bfs[i+2] = bf3;
-				bfs[i+3] = bf4;
+			for (var i=0; i<=moveAbility; i++) {
+				var bf1:BattleField = Share.getBF(bfx-i*32,bfy-i*32);
+				var bf2:BattleField = Share.getBF(bfx-i*32,bfy+i*32);
+				var bf3:BattleField = Share.getBF(bfx+i*32,bfy-i*32);
+				var bf4:BattleField = Share.getBF(bfx+i*32,bfy+i*32);
+				var bf5:BattleField = Share.getBF(bfx-i*32,bfy);
+				var bf6:BattleField = Share.getBF(bfx,bfy+i*32);
+				var bf7:BattleField = Share.getBF(bfx+i*32,bfy);
+				var bf8:BattleField = Share.getBF(bfx,bfy-i*32);
+				bfs.push(bf1);
+				bfs.push(bf2);
+				bfs.push(bf3);
+				bfs.push(bf4);
+				bfs.push(bf5);
+				bfs.push(bf6);
+				bfs.push(bf7);
+				bfs.push(bf8);
+
 			}
 			return bfs;
 		}
@@ -142,7 +154,7 @@
 			//addChild(fangM);
 			// 目前默認為5 以後 根據部隊的種類 分配不同的行動能力值
 			if (true) {
-				moveAbility = 5;
+				moveAbility = 3;
 			}
 		}
 	}
