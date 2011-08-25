@@ -28,8 +28,8 @@
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
 			picUrlB=new URLRequest  ;
-			picUrlA.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
-			picUrlB.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
+			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader  ;
@@ -60,7 +60,7 @@
 					loadPicA.visible=false;
 					loadPicB.visible=true;
 					myTime.stop();
-					changeDirection();
+					//changeDirection();
 					//flipHorizontal(this);
 					myTimeB.start();
 				}
@@ -108,9 +108,10 @@
 			mousePoint=this.localToGlobal(mousePoint);
 			trace("Stage coordinates:"+mousePoint);
 
-			var bfx:int = mousePoint.x;
-			var bfy:int = mousePoint.y;
-			var bf:BattleField = stage.battleOBJ[ bfx/32*(bfy/32) + bfy/32];
+			var bfx:int = mousePoint.x-mousePoint.x%32;
+			var bfy:int = mousePoint.y-mousePoint.y%32;
+			trace("bfx:"+bfx+"bfy:"+bfy);
+			var bf:BattleField = Share.battleObj[ (bfx/32)*24 + bfy/32];
 			bf.turnToDark();
 		}
 		// 构造
