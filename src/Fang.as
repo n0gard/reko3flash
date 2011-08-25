@@ -11,6 +11,7 @@
 	import flash.events.TimerEvent;
 	import flash.events.MouseEvent;
 	import fl.motion.Color;
+	import flash.geom.Point;
 
 
 	public class Fang extends Sprite {
@@ -27,8 +28,8 @@
 		private function pushArray(i:int):void {
 			picUrlA=new URLRequest  ;
 			picUrlB=new URLRequest  ;
-			picUrlA.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
-			picUrlB.url="../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
+			picUrlA.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1a.png";
+			picUrlB.url="../../素材/战场可移动单位已拆分/test_" + String(i) + "-1b.png";
 		}
 		private function loadpic(ti:int):void {
 			loadPicA=new Loader  ;
@@ -45,7 +46,7 @@
 			//fangM.addChild(loadPicA);
 			//fangM.addChild(loadPicB);
 
-			this.addEventListener(MouseEvent.CLICK,changeStatus);
+			this.addEventListener(MouseEvent.CLICK,showAvalibleBattleField);
 
 			myTime=new Timer(ti);
 			myTimeB=new Timer(ti);
@@ -87,6 +88,7 @@
 		}
 		// 改变状态
 		public function changeStatus(e:MouseEvent) {
+			trace("Click Ok");
 			var color:Color=new Color();
 			if (active == 1) {
 				color.brightness = -0.3;
@@ -96,6 +98,20 @@
 				active = 1;
 			}
 			this.transform.colorTransform = color;
+		}
+		// 显示高亮
+		public function showAvalibleBattleField(e:MouseEvent) {
+			//battleOBJ[]
+			trace("Fang's   X "+this.x+" Y "+this.y);
+
+			var mousePoint:Point=new Point(this.mouseX, this.mouseY);
+			mousePoint=this.localToGlobal(mousePoint);
+			trace("Stage coordinates:"+mousePoint);
+
+			var bfx:int = mousePoint.x;
+			var bfy:int = mousePoint.y;
+			var bf:BattleField = stage.battleOBJ[ bfx/32*(bfy/32) + bfy/32];
+			bf.turnToDark();
 		}
 		// 构造
 		public function Fang(zx:int) {
