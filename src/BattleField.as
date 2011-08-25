@@ -33,6 +33,8 @@
 		// 显示自身属性
 		private function showProperties(e:MouseEvent):void {
 			trace("showProperties Click Ok");
+			trace("x -- " + this.x + " y -- " + this.y);
+			trace("下标 -- " + (this.x / 32 + (this.y /32*24)-1));
 		}
 		public function BattleField():void {
 			DrawRect();
