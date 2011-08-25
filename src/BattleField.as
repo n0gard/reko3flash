@@ -14,6 +14,7 @@
 			this.graphics.endFill();
 			this.addEventListener(MouseEvent.CLICK,showProperties);
 		}
+		// 变黑
 		public function turnToDark():void {
 			trace("turnToDark Ok");
 			this.graphics.clear();
@@ -32,6 +33,7 @@
 			color.brightness = 0;
 			this.transform.colorTransform = color;
 		}
+		// 显示自身属性
 		private function showProperties(e:MouseEvent):void {
 			trace("showProperties Click Ok");
 			var color:Color=new Color();
