@@ -33,28 +33,28 @@
 			this.graphics.clear();
 			// this.graphics.lineStyle(1,0x000000,1);
 			// this.graphics.beginFill(0x6DE779,100);
-			this.graphics.beginFill(0xffffff,0);
+			this.graphics.beginFill(0x000000,0);
 			this.graphics.drawRect(0,0,32,32);
 			this.graphics.endFill();
-		}
-		private function Move():void {
 			this.addEventListener(MouseEvent.CLICK,loction);
 		}
+		// 某Fang移动到此BF上时
 		private function loction(e:MouseEvent):void {
-
+			Share.setVisible(false);
+			Share.fang.locate(this.x,this.y);
 		}
 		// 显示自身属性
 		private function showProperties(e:MouseEvent):void {
 			trace("showProperties Click Ok");
 			trace("x -- " + this.x + " y -- " + this.y);
 			trace("下标 -- " + (this.x / 32 + this.y / 32 * 24 - 1));
-			var textField:TextField = new TextField();
-			var textFormat:TextFormat = new TextFormat();
-			textFormat.font = "宋体";
-			textFormat.size = 12;
-			textFormat.color = 0x000000;
+			var textField:TextField=new TextField;
+			var textFormat:TextFormat=new TextFormat;
+			textFormat.font="宋体";
+			textFormat.size=12;
+			textFormat.color=0xFFFFFF;
 			textField.setTextFormat(textFormat);
-			textField.text=this.x+"\n"+this.y;
+			textField.text=this.x + "\n" + this.y;
 			addChild(textField);
 		}
 		// 构造
