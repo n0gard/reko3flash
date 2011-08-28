@@ -2,6 +2,8 @@
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import fl.motion.Color;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 
 	public class BattleField extends Sprite {
 		private var consumeAbility:int;
@@ -46,6 +48,14 @@
 			trace("showProperties Click Ok");
 			trace("x -- " + this.x + " y -- " + this.y);
 			trace("下标 -- " + (this.x / 32 + this.y / 32 * 24 - 1));
+			var textField:TextField = new TextField();
+			var textFormat:TextFormat = new TextFormat();
+			textFormat.font = "宋体";
+			textFormat.size = 12;
+			textFormat.color = 0x000000;
+			textField.setTextFormat(textFormat);
+			textField.text=this.x+"\n"+this.y;
+			addChild(textField);
 		}
 		// 构造
 		public function BattleField():void {
