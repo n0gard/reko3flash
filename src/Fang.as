@@ -112,7 +112,7 @@
 			//calculateBrightCoordinates(this.x,this.y,1);
 			//calculateBrightCoordinates(this.x,this.y,2);
 			//calculateBrightCoordinates(this.x,this.y,3);
-			calculateBrightCoordinates(this.x,this.y,4);
+			calculateBrightCoordinates(this.x,this.y,0);
 			for (var i=0; i < bfs.length; i++) {
 				bfs[i].turnToBright();
 			}
@@ -120,6 +120,8 @@
 		private function calculateBrightCoordinates(lastX:int,lastY:int,lastDirection:int):void {
 			var targetBFx:int = lastX;
 			var targetBFy:int = lastY;
+			//var startBFx:int = lastX;
+			//var startBFy:int = lastY;
 			var bf:BattleField;
 			var directions:Array=new Array;
 			// 去掉上一个坐标的方向 避免死循环 因此 directions的length为3  其最大下标为2
@@ -128,21 +130,29 @@
 				//directions.push(2);
 				directions.push(3);
 				directions.push(4);
+				//startBFx = lastX;
+				//startBFy = lastY-BLOCK_SIZE_PX;
 			} else if (lastDirection == 2) {
 				//directions.push(1);
 				directions.push(2);
 				directions.push(3);
 				directions.push(4);
+				//startBFx = lastX;
+				//startBFy = lastY+BLOCK_SIZE_PX;
 			} else if (lastDirection == 3) {
 				directions.push(1);
 				directions.push(2);
 				directions.push(3);
 				//directions.push(4);
+				//startBFx = lastX-BLOCK_SIZE_PX;
+				//startBFy = lastY;
 			} else if (lastDirection == 4) {
 				directions.push(1);
 				directions.push(2);
 				//directions.push(3);
 				directions.push(4);
+				//startBFx = lastX+BLOCK_SIZE_PX;
+				//startBFy = lastY;
 			} else {
 				directions.push(1);
 				directions.push(2);
@@ -188,38 +198,31 @@
 						moveAbility=0;
 						break;
 				}
+				trace(i+" and "+(directions.length-1));
 				// 大于零 说明可以到达 且可以继续向 该方向 的坐标延伸
 				if (moveAbility > 0) {
 					bfs.push(bf);
 					// 此处开始递归  directions[i]就是该方向!!!
 					calculateBrightCoordinates(targetBFx,targetBFy,directions[i]);
-
 					// 等于零 说明可以到达 但不能继续移动 所以换个方向 继续下一次循环
 				} else if (moveAbility == 0) {
 					bfs.push(bf);
-					// 别忘了把 moveAbility 重置为之前状态
-					moveAbility+= bf.getConsumeAbility();
-					// i==directions.length 说明directions数组已经遍历到最后一个了 如果已经最后一个方向 返回到上一个坐标
-					if (i == directions.length) {
-						return;
-
-						// i!=directions.length 说明此次坐标的三个方向还没遍历完全 继续
-					} else {
-						continue;
-					}
-					// 如果小于零 说明此处的该方向 已经不能到达 下一方向
+					// 如果小于零 说明此处的该方向 已经不能到达 
 				} else if (moveAbility < 0) {
-					//  别忘了把 moveAbility 重置为之前状态
-					moveAbility+= bf.getConsumeAbility();
-					// i==directions.length 说明directions数组已经遍历到最后一个了 如果已经最后一个方向 返回到上一个坐标
-					if (i == directions.length) {
-						return;
 
-						// i!=directions.length 说明此次坐标的三个方向还没遍历完全 继续
-					} else {
-						continue;
-					}
 				}
+				//  别忘了把 moveAbility 重置为之前状态
+				moveAbility+= bf.getConsumeAbility();
+				// i==directions.length-1 说明directions数组已经遍历到最后一个了 如果已经最后一个方向 返回到上一个坐标
+				if (i == directions.length-1) {
+					trace("到尽头");
+					return;
+
+					// i!=directions.length 说明此次坐标的三个方向还没遍历完全 继续
+				}
+				// 说明此次坐标的三个方向还没遍历完全 继续
+				trace("换方向");
+				continue;
 			}
 			return;
 		}
@@ -230,7 +233,7 @@
 			//addChild(fangM);
 			// 目前默認為5 以後 根據部隊的種類 分配不同的行動能力值
 			if (true) {
-				moveAbility=1;
+				moveAbility=3;
 			}
 		}
 	}
