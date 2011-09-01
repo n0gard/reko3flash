@@ -26,6 +26,7 @@
 			this.graphics.beginFill(0xffffff,0.5);
 			this.graphics.drawRect(0,0,32,32);
 			this.graphics.endFill();
+			this.addEventListener(MouseEvent.CLICK,callErr);
 		}
 		// 变亮
 		public function turnToBright():void {
@@ -38,10 +39,19 @@
 			this.graphics.endFill();
 			this.addEventListener(MouseEvent.CLICK,loction);
 		}
+		// 恢復
+		public function restore():void{
+			DrawRect();
+			}
 		// 某Fang移动到此BF上时
 		private function loction(e:MouseEvent):void {
 			Share.setVisible(false);
+			Share.fang.restoreAllBright();
 			Share.fang.locate(this.x,this.y);
+		}
+		// 报错
+		private function callErr(e:MouseEvent):void {
+			trace("您不该点这里 您无法移动到这里滴...");
 		}
 		// 显示自身属性
 		private function showProperties(e:MouseEvent):void {
@@ -50,7 +60,7 @@
 			trace("下标 -- " + (this.x / 32 + this.y / 32 * 24 - 1));
 			var textField:TextField=new TextField;
 			var textFormat:TextFormat=new TextFormat;
-			textFormat.font="宋体";
+			//textFormat.font="宋体";
 			textFormat.size=12;
 			textFormat.color=0xFFFFFF;
 			textField.setTextFormat(textFormat);

@@ -117,7 +117,13 @@
 			//calculateBrightCoordinates(this.x,this.y,3);
 			calculateBrightCoordinates(this.x,this.y,0);
 			for (var i=0; i < bfs.length; i++) {
-				bfs.pop().turnToBright();
+				bfs[i].turnToBright();
+			}
+		}
+		// 恢复高亮区域
+		public function restoreAllBright():void{
+			for (var i=0; i < bfs.length; i++) {
+				bfs[i].restore();
 			}
 		}
 		// 计算高亮区域
