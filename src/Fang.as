@@ -1,4 +1,4 @@
-﻿package {
+﻿;;kpackage {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.net.URLRequest;
@@ -179,6 +179,10 @@
 						trace("判定朝上");
 						targetBFy=lastY - BLOCK_SIZE_PX;
 						bf=Share.getBF(targetBFx,targetBFy);
+						trace(bfs.indexOf(bf)+"  <------");
+						if(bfs.indexOf(bf)!=-1){
+							break;
+						}
 						moveAbility-= bf.getConsumeAbility();
 						break;
 						// 朝下
@@ -186,6 +190,10 @@
 						trace("判定朝下");
 						targetBFy=lastY + BLOCK_SIZE_PX;
 						bf=Share.getBF(targetBFx,targetBFy);
+						trace(bfs.indexOf(bf)+"  <------");
+						if(bfs.indexOf(bf)!=-1){
+							break;
+						}
 						moveAbility-= bf.getConsumeAbility();
 						break;
 						// 朝左
@@ -193,6 +201,10 @@
 						trace("判定朝左");
 						targetBFx=lastX - BLOCK_SIZE_PX;
 						bf=Share.getBF(targetBFx,targetBFy);
+						trace(bfs.indexOf(bf)+"  <------");
+						if(bfs.indexOf(bf)!=-1){
+							break;
+						}
 						moveAbility-= bf.getConsumeAbility();
 						break;
 						// 朝右
@@ -200,6 +212,10 @@
 						trace("判定朝右");
 						targetBFx=lastX + BLOCK_SIZE_PX;
 						bf=Share.getBF(targetBFx,targetBFy);
+						trace(bfs.indexOf(bf)+"  <------");
+						if(bfs.indexOf(bf)!=-1){
+							break;
+						}
 						moveAbility-= bf.getConsumeAbility();
 						break;
 						// 原地不动
@@ -211,12 +227,16 @@
 				trace(i + " and " +( directions.length - 1));
 				// 大于零 说明可以到达 且可以继续向 该方向 的坐标延伸
 				if (moveAbility > 0) {
-					bfs.push(bf);
+					if(bfs.indexOf(bf)==-1){
+						bfs.push(bf);
+					}
 					// 此处开始递归  directions[i]就是该方向!!!
 					calculateBrightCoordinates(targetBFx,targetBFy,directions[i]);
 					// 等于零 说明可以到达 但不能继续移动 所以换个方向 继续下一次循环
 				} else if (moveAbility == 0) {
-					bfs.push(bf);
+					if(bfs.indexOf(bf)==-1){
+						bfs.push(bf);
+					}
 					// 如果小于零 说明此处的该方向 已经不能到达 
 				} else if (moveAbility < 0) {
 
@@ -238,6 +258,7 @@
 		}
 		// 移动到某坐标
 		public function locate(targetX:int,targetY:int):void {
+			// 暂且直接过去
 			this.x = targetX;
 			this.y = targetY;
 		}
@@ -248,7 +269,7 @@
 			//addChild(fangM);
 			// 目前默認為5 以後 根據部隊的種類 分配不同的行動能力值
 			if (true) {
-				moveAbility=4;
+				moveAbility=2;
 			}
 		}
 	}
