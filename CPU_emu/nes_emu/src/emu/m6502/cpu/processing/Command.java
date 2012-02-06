@@ -15,7 +15,7 @@ public class Command {
 	/**
 	 * 操作数
 	 */
-	private int operand;
+	private Object operand;
 
 	/**
 	 * 操作命令 包含"操作码"和"操作数"
@@ -23,7 +23,7 @@ public class Command {
 	 * @param instruction
 	 * @param operand
 	 */
-	public Command(Instruction instruction, int operand) {
+	public Command(Instruction instruction, Object operand) {
 		super();
 		this.instruction = instruction;
 		this.operand = operand;
@@ -38,11 +38,11 @@ public class Command {
 		this.instruction = instruction;
 	}
 
-	public int getOperand() {
+	public Object getOperand() {
 		return operand;
 	}
 
-	public void setOperand(int operand) {
+	public void setOperand(Object operand) {
 		this.operand = operand;
 	}
 
